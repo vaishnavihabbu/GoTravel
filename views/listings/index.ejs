@@ -1,0 +1,222 @@
+<% layout("./layouts/boilerplate") %>
+<style>
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+
+  .filter p {
+    font-size: 0.8rem;
+  }
+
+  .tax-info {
+    display: none;
+  }
+
+  .tax-toggle {
+    border: 1px solid black;
+    border-radius: 1rem;
+    height: 3.5rem;
+    padding: 1rem;
+    margin-left: 10rem;
+  }
+
+  /* Media queries for responsive icons */
+  @media (max-width: 1200px) {
+    .filter i {
+      font-size: 1.8rem;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .filter i {
+      font-size: 1.5rem;
+    }
+
+    .filter p {
+      font-size: 0.75rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .filter i {
+      font-size: 1.3rem;
+    }
+
+    .filter p {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .filter {
+      margin-right: 1rem;
+    }
+
+    .filter i {
+      font-size: 1.2rem;
+    }
+
+    .filter p {
+      font-size: 0.65rem;
+    }
+
+    #filters {
+      justify-content: space-between;
+    }
+
+    .tax-toggle {
+      margin-left: 2rem;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .filter i {
+      font-size: 1rem;
+    }
+
+    .filter p {
+      font-size: 0.6rem;
+    }
+  }
+</style>
+
+  <div id="filters">
+    <div class="filter" id="All">
+      <div><i class="fa-solid fa-map"></i></div>
+      <p>All</p>
+    </div>
+    <div class="filter" id="Trending">
+      <div><i class="fa-solid fa-fire"></i></div>
+      <p>Trending</p>
+    </div>
+    <div class="filter" id="Pool">
+      <div><i class="fa-solid fa-water-ladder"></i></div>
+      <p>Pool</p>
+    </div>
+    <div class="filter" id="Iconic-cities">
+      <div><i class="fa-solid fa-city"></i></div>
+      <p>Iconic cities</p>
+    </div>
+    <div class="filter" id="Mountains">
+      <div><i class="fa-solid fa-person-hiking"></i></div>
+      <p>Mountains</p>
+    </div>
+    <div class="filter" id="Camping">
+      <div><i class="fa-solid fa-tents"></i></div>
+      <p>Camping</p>
+    </div>
+    <div class="filter" id="Beach">
+      <div><i class="fa-solid fa-umbrella-beach"></i></div>
+      <p>Beach</p>
+    </div>
+    <div class="filter" id="Pilgrimage">
+      <div><i class="fa-solid fa-gopuram"></i></div>
+      <p>Pilgrimage</p>
+    </div>
+    <div class="filter" id="Hostels">
+      <div><i class="fa-solid fa-bed"></i></div>
+      <p>Hostels</p>
+    </div> 
+
+    <div class="tax-toggle">
+      <div class="form-check-reverse form-switch ch">
+        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+        <label class="form-check-label" for="flexSwitchCheckDefault">Display total after taxes</label>
+      </div>
+    </div>
+  </div>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
+    <% for(let listing of allListings){ %>
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+            <div class="card col listing-card" style="width: 20rem;">
+                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height:20rem">
+                <div class="card-img-overlay">
+                    <h5 class="card-title"></h5>
+                    <p class="card-text"></p>
+                    <p class="card-text"><small></small></p>
+                  </div>
+                <div class="card-body">
+                  <p class="card-text">
+                    <b><%= listing.title %></b>
+                    <br>
+                    <%= Number(listing.price).toLocaleString("en-IN")%>
+                    &nbsp;&nbsp;&nbsp; <i class="tax-info">+18% GST</i>
+                  </p>
+                </div>
+            </div>
+        </a>
+    <% } %>
+</div>
+
+<script>
+  // Toggle tax display
+  let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+  taxSwitch.addEventListener("click", ()=>{
+    let taxInfo = document.getElementsByClassName("tax-info");
+    for (let info of taxInfo){
+      info.style.display = info.style.display === "inline" ? "none" : "inline";
+    }
+  });
+
+  // Filter listings by category
+  // let filterArr = document.getElementsByClassName("filter");
+  // let currFilter = "All";
+  // for (let filterDiv of filterArr){
+  //   filterDiv.addEventListener("click", ()=>{
+  //     currFilter = filterDiv.id;
+  //     window.location.href = `/listings?category=${currFilter}`;
+  //   });
+  // }
+
+// let filterArr = document.getElementsByClassName("filter");
+// let currFilter = "All";
+
+// for (let filterDiv of filterArr) {
+//   filterDiv.addEventListener("click", () => {
+//     currFilter = filterDiv.id.replace("-", " ");  // Replacing "-" with space for readability
+//     console.log(currFilter);
+//     window.location.href = `/listings?category=${currFilter}`;
+//   });
+// }
+
+let filterArr = document.getElementsByClassName("filter");
+let currFilter = "All";
+
+// Map the frontend filter ids to stored categories
+const categoryMap = {
+  "Iconic-cities": "Iconic Cities",
+  "All": "All",
+  "Trending": "Trending",
+  "Pool": "Pool",
+  "Mountains": "Mountains",
+  "Camping": "Camping",
+  "Beach": "Beach",
+  "Pilgrimage": "Pilgrimage",
+  "Hostels": "Hostels"
+};
+
+for (let filterDiv of filterArr) {
+  filterDiv.addEventListener("click", () => {
+    currFilter = categoryMap[filterDiv.id];  // Map id to category name
+    console.log(currFilter);
+    window.location.href = `/listings?category=${currFilter}`
+  });
+}
+</script>
+
+
