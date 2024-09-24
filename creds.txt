@@ -1,7 +1,0 @@
-yHC215y8gcgleoXx
-vaishnavihabbu10102003
-
-mongodb+srv://vaishnavihabbu10102003:yHC215y8gcgleoXx@cluster0.7tahf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
-
-
-mongodb+srv://vaishnavihabbu10102003:yHC215y8gcgleoXx@cluster0.7tahf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
