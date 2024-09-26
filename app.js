@@ -90,6 +90,10 @@ app.use((err,req,res,next)=>{
     res.status(status).render("error.ejs", { message });
 })
 
+app.get('/', (req, res) => {
+    res.redirect("/listings"); // or render your main view
+});
+
 app.listen(process.env.PORT , ()=>{
     console.log(`listening on port ${port}`);
 });
