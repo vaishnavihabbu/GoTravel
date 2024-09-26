@@ -77,7 +77,7 @@ module.exports.addNewListing = async (req, res, next) => {
       if (req.file) {
         newListing.image = {
           url: req.file.path,
-          filename: req.file.filename
+          // filename: req.file.filename
         };
       }
   

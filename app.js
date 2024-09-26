@@ -90,6 +90,6 @@ app.use((err,req,res,next)=>{
     res.status(status).render("error.ejs", { message });
 })
 
-app.listen(port , ()=>{
+app.listen(process.env.PORT , ()=>{
     console.log(`listening on port ${port}`);
 });
