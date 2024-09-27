@@ -13,9 +13,11 @@
 
     <div>
       <div class="navbar-nav" id="search-div">
-        <form class="d-flex" role="search">
-          <input class="form-control me-2 search-inp" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-search" type="submit"><i class="fa-solid fa-magnifying-glass" style="display: inline; margin-right: 0.5rem;"></i>Search</button>
+        <form class="d-flex" action="/listings" method="GET" role="search">
+          <input class="form-control me-2 search-inp" name="query" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-search" type="submit">
+            <i class="fa-solid fa-magnifying-glass" style="display: inline; margin-right: 0.5rem;"></i>Search
+          </button>
         </form>
     </div>
     </div>

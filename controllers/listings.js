@@ -1,4 +1,5 @@
 const Listing = require("../models/listing.js");
+const review = require("../models/review.js");
 const {listingSchema , reviewSchema} = require("../schema.js");
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapToken = process.env.MAP_TOKEN;
@@ -16,40 +17,89 @@ const geocodingClient = mbxGeocoding({ accessToken:'pk.eyJ1IjoidmFpc2huYXZpaGFiY
 //     res.render("./listings/index.ejs" , { allListings });
 // };
 
+// module.exports.index = async (req, res) => {
+//   const { category } = req.query; // Get category from query params
+//   let query = {};
+
+//   if (category === 'Trending') {
+//     const allListings = await Listing.aggregate([
+//       {
+//         $lookup: {
+//           from: 'reviews', // Name of the reviews collection
+//           localField: 'reviews',
+//           foreignField: '_id',
+//           as: 'reviews',
+//         },
+//       },
+//       {
+//         $addFields: {
+//           avgRating: { $avg: '$reviews.rating' }, // Calculate average rating
+//         },
+//       },
+//       {
+//         $match: { avgRating: 5 }, // Filter listings with average rating of 5
+//       },
+//     ]);
+
+//     res.render('./listings/index.ejs', { allListings });
+//   } else {
+//     if (category) {
+//       query = { category: category }; // Add filter condition if category is provided
+//     }
+
+//     const allListings = await Listing.find(query);
+//     res.render('./listings/index.ejs', { allListings });
+//   }
+// };
+
 module.exports.index = async (req, res) => {
-  const { category } = req.query; // Get category from query params
-  let query = {};
+  const { category, query } = req.query; // Get category and search query from query params
+  let listingQuery = {};
 
+  if (query) {
+      // If there is a search query, perform a regex search
+      listingQuery = {
+          $or: [
+              { title: new RegExp(query, 'i') },  // Search by title
+              { description: new RegExp(query, 'i') }, // Search by description
+              { location: new RegExp(query, 'i') }  // Search by location
+          ]
+      };
+  }
+
+  if (category) {
+      // If a category is provided, add it to the query
+      listingQuery.category = category;
+  }
+
+  const allListings = await Listing.find(listingQuery);
+  // Check if category filter is applied and handle it if necessary
   if (category === 'Trending') {
-    const allListings = await Listing.aggregate([
-      {
-        $lookup: {
-          from: 'reviews', // Name of the reviews collection
-          localField: 'reviews',
-          foreignField: '_id',
-          as: 'reviews',
-        },
-      },
-      {
-        $addFields: {
-          avgRating: { $avg: '$reviews.rating' }, // Calculate average rating
-        },
-      },
-      {
-        $match: { avgRating: 5 }, // Filter listings with average rating of 5
-      },
-    ]);
+      const trendingListings = await Listing.aggregate([
+          {
+              $lookup: {
+                  from: 'reviews', // Name of the reviews collection
+                  localField: 'reviews',
+                  foreignField: '_id',
+                  as: 'reviews',
+              },
+          },
+          {
+              $addFields: {
+                  avgRating: { $avg: '$reviews.rating' }, // Calculate average rating
+              },
+          },
+          {
+              $match: { avgRating: 5 }, // Filter listings with average rating of 5
+          },
+      ]);
 
-    res.render('./listings/index.ejs', { allListings });
+      res.render('./listings/index.ejs', { allListings: trendingListings });
   } else {
-    if (category) {
-      query = { category: category }; // Add filter condition if category is provided
-    }
-
-    const allListings = await Listing.find(query);
-    res.render('./listings/index.ejs', { allListings });
+      res.render('./listings/index.ejs', { allListings });
   }
 };
+
 
 module.exports.renderNewForm = async (req,res)=>{
     res.render("./listings/new.ejs");
