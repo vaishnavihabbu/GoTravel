@@ -11,7 +11,7 @@ module.exports.listingSchema = Joi.object({
             filename: Joi.string().optional(),
             url: Joi.string().allow(null, "").optional()
         }).optional(),
-        category: Joi.string().valid("Trending", "Mountains", "Pool", "Iconic Cities", "Camping", "Beach", "Hostels", "Pilgrimage").required()
+        category: Joi.string().valid("Mountains", "Pool", "Iconic Cities", "Camping", "Beach", "Hostels", "Pilgrimage").required()
     }).required()
 });
 // module.exports.listingSchema = Joi.object({

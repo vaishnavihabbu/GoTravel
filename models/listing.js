@@ -50,7 +50,7 @@ const listingSchema = new Schema({
     },
     category:{
       type:String,
-      enum: ["Trending","Mountains","Pool","Iconic Cities","Camping","Beach","Hostels","Pilgrimage" ]
+      enum: ["Mountains","Pool","Iconic Cities","Camping","Beach","Hostels","Pilgrimage" ]
     }
   });
 

@@ -22,6 +22,12 @@
     font-size: 0.8rem;
   }
 
+  .active-filter i{
+    color: aqua;
+    background-color: rgb(190, 188, 186);
+    opacity: 1;
+  }
+
   .tax-info {
     display: none;
   }
@@ -95,10 +101,6 @@
 </style>
 
   <div id="filters">
-    <div class="filter" id="All">
-      <div><i class="fa-solid fa-map"></i></div>
-      <p>All</p>
-    </div>
     <div class="filter" id="Trending">
       <div><i class="fa-solid fa-fire"></i></div>
       <p>Trending</p>
@@ -173,31 +175,9 @@
     }
   });
 
-  // Filter listings by category
-  // let filterArr = document.getElementsByClassName("filter");
-  // let currFilter = "All";
-  // for (let filterDiv of filterArr){
-  //   filterDiv.addEventListener("click", ()=>{
-  //     currFilter = filterDiv.id;
-  //     window.location.href = `/listings?category=${currFilter}`;
-  //   });
-  // }
-
-// let filterArr = document.getElementsByClassName("filter");
-// let currFilter = "All";
-
-// for (let filterDiv of filterArr) {
-//   filterDiv.addEventListener("click", () => {
-//     currFilter = filterDiv.id.replace("-", " ");  // Replacing "-" with space for readability
-//     console.log(currFilter);
-//     window.location.href = `/listings?category=${currFilter}`;
-//   });
-// }
 
 let filterArr = document.getElementsByClassName("filter");
-let currFilter = "All";
-
-// Map the frontend filter ids to stored categories
+let currFilter = "";
 const categoryMap = {
   "Iconic-cities": "Iconic Cities",
   "All": "All",
@@ -212,7 +192,7 @@ const categoryMap = {
 
 for (let filterDiv of filterArr) {
   filterDiv.addEventListener("click", () => {
-    currFilter = categoryMap[filterDiv.id];  // Map id to category name
+    currFilter = categoryMap[filterDiv.id]; 
     console.log(currFilter);
     window.location.href = `/listings?category=${currFilter}`
   });
