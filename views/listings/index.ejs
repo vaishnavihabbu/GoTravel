@@ -40,64 +40,18 @@
     margin-left: 10rem;
   }
 
-  /* Media queries for responsive icons */
-  @media (max-width: 1200px) {
-    .filter i {
-      font-size: 1.8rem;
+  @media(max-width:400px){
+    .tax-toggle{
+      display: none;
+    }
+    
+    #filters{
+      display: grid;
+      gap: 1px;
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  @media (max-width: 992px) {
-    .filter i {
-      font-size: 1.5rem;
-    }
-
-    .filter p {
-      font-size: 0.75rem;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .filter i {
-      font-size: 1.3rem;
-    }
-
-    .filter p {
-      font-size: 0.7rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .filter {
-      margin-right: 1rem;
-    }
-
-    .filter i {
-      font-size: 1.2rem;
-    }
-
-    .filter p {
-      font-size: 0.65rem;
-    }
-
-    #filters {
-      justify-content: space-between;
-    }
-
-    .tax-toggle {
-      margin-left: 2rem;
-    }
-  }
-
-  @media (max-width: 400px) {
-    .filter i {
-      font-size: 1rem;
-    }
-
-    .filter p {
-      font-size: 0.6rem;
-    }
-  }
 </style>
 
   <div id="filters">
@@ -133,6 +87,10 @@
       <div><i class="fa-solid fa-bed"></i></div>
       <p>Hostels</p>
     </div> 
+    <div class="filter" id="Affordable">
+      <div><i class="fa-solid fa-indian-rupee-sign"></i></div>
+      <p>Affordable</p>
+    </div>
 
     <div class="tax-toggle">
       <div class="form-check-reverse form-switch ch">
@@ -187,7 +145,8 @@ const categoryMap = {
   "Camping": "Camping",
   "Beach": "Beach",
   "Pilgrimage": "Pilgrimage",
-  "Hostels": "Hostels"
+  "Hostels": "Hostels",
+  "Affordable":"Affordable"
 };
 
 for (let filterDiv of filterArr) {

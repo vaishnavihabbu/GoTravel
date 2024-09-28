@@ -19,4 +19,5 @@ router.route("/signup")
 
 router.get("/logout" , userControllers.userLogOut);
 
+
 module.exports = router;

@@ -1,64 +1,96 @@
 <nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top" id="nav-div">
   <div class="container-fluid">
-    <div style="display: flex;">
-      <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" ></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <dvi class="navbar-nav">
-            <a class="nav-link" href="/listings">Explore</a>
-        </div>
-    </div>
+    <a class="navbar-brand" href="/listings"><i class="fa-regular fa-compass"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"><i class="fa-solid fa-bars"></i></button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="navbar-nav me-auto">
+        <a class="nav-link n-options" href="/listings">Explore</a>
+      </div>
 
 
-    <div>
-      <div class="navbar-nav" id="search-div">
-        <form class="d-flex" action="/listings" method="GET" role="search">
-          <input class="form-control me-2 search-inp" name="query" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-search" type="submit">
-            <i class="fa-solid fa-magnifying-glass" style="display: inline; margin-right: 0.5rem;"></i>Search
+      <div class="mx-auto">
+        <form class="d-flex align-items-center" action="/listings" method="GET" role="search">
+          <input class="form-control search-inp me-2" name="query" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-search d-flex align-items-center" type="submit">
+            <i class="fa-solid fa-magnifying-glass me-1"></i> Search
           </button>
         </form>
-    </div>
-    </div>
-    
-    <div>
-      <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="/listings/new">Rent your place!</a>
-        <% if(!currUser){ %>
-          <a class="nav-link" href="/signup"><b>Sign Up</b></a>
-          <a class="nav-link" href="/login"><b>Log in</b></a>
-        <% } %>
-        <% if(currUser){%>
-          <a class="nav-link" href="/logout"><b>Log out</b></a>
-        <%} %>
       </div>
-    </div>
+
+      <div class="navbar-nav ms-auto align-items-center toggle-options">
+        <a class="nav-link n-options" href="/listings/new">Rent your place!</a>
+        <a href="/listings/new" class="nav-link p-e"><i class="fa-solid fa-plus"></i>Add New</a>
+        <% if(!currUser){ %>
+          <a class="nav-link n-options" href="/signup"><b>Sign Up</b></a>
+          <a class="nav-link n-options" href="/login"><b>Log in</b></a>
+        <% } %>
+        <% if(currUser){ %>
+          <a class="nav-link n-options" href="/logout"><b>Log out</b></a>
+        <% } %>
+        <a class="nav-link p-e" href="/signup"><i class="fa-solid fa-user"></i>SignUp</a>
+      </div>
     </div>
   </div>
 </nav>
 
 <style>
-  .container-fluid{
+  .container-fluid {
     display: flex;
-    justify-content:space-between !important
+    justify-content: space-between;
+    align-items: center;
   }
 
-  .btn-search{
+  .btn-search {
     background-color: #fe424d;
     color: white;
     border-radius: 25px;
-    padding: 0rem 1rem 0 1rem;
-  }
-  .btn-search:hover{
-    background-color: #fe424d;
-    color: white;
-    border-radius: 25px;
-    padding: 0rem 1rem 0 1rem;
+    padding: 0.5rem 1rem;
   }
 
-  .search-inp{
-    border-radius: 25px;
-    padding: 0.5rem 3rem 0.5rem 3rem;
+  .btn-search:hover {
+    background-color: #fe424d;
+    color: white;
   }
+
+  .search-inp {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    margin-right: 0.5rem; 
+  }
+
+  .fa-magnifying-glass {
+    margin-right: 0.5rem; 
+  }
+
+  .p-e {
+    display: none;
+  }
+
+
+  @media (max-width: 400px) {
+    .p-e {
+      display: inline;
+    }
+
+    .n-options {
+      display: none;
+    }
+
+    .navbar-nav.ms-auto {
+      flex-wrap: nowrap;
+    }
+
+    .toggle-options{
+      background-color: #fe424d;
+      opacity: 0.5;
+    }
+    
+  }
+
+  .mx-auto {
+    flex: 1; 
+    display: flex;
+    justify-content: center;
+  }
+
 </style>

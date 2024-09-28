@@ -95,7 +95,14 @@ module.exports.index = async (req, res) => {
       ]);
 
       res.render('./listings/index.ejs', { allListings: trendingListings });
-  } else {
+  }
+  else if(category=== "Affordable"){
+    const affordableListings = await Listing.find({
+        price:{$lte: 1500}
+    });
+    res.render('./listings/index.ejs' , { allListings: affordableListings })
+  } 
+else {
       res.render('./listings/index.ejs', { allListings });
   }
 };
